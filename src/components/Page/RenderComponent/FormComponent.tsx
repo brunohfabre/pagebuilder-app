@@ -62,10 +62,13 @@ export function FormComponent({ node, children }: FormComponentProps) {
         if (node.attributes.referenceId) {
           queryClient.setQueryData(
             [node.attributes.referenceId],
-            (prevState: any) =>
-              prevState.map((item: { [key: string]: any }) =>
-                item.id === response.data.id ? response.data : item,
-              ),
+            (prevState: any) => {
+              if (Array.isArray(prevState)) {
+                return prevState.map((item: { [key: string]: any }) =>
+                  item.id === response.data.id ? response.data : item,
+                )
+              }
+            },
           )
         }
       } else {
@@ -87,7 +90,6 @@ export function FormComponent({ node, children }: FormComponentProps) {
     } finally {
       setLoading(false)
     }
-    console.log(data)
   }
 
   return (

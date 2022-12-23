@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@siakit/button": "^0.0.5",
+    "@siakit/card": "^0.0.6",
     "@siakit/core": "^0.0.2",
     "@siakit/dialog": "^0.0.7",
+    "@siakit/footer": "^0.0.5",
     "@siakit/form-unform": "^0.0.15",
     "@siakit/heading": "^0.0.3",
     "@siakit/layout": "^0.0.7",

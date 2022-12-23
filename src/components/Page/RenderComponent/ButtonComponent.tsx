@@ -20,6 +20,10 @@ export function ButtonComponent({ node }: ButtonComponentProps) {
         navigate(node.attributes.to.route)
       }
     }
+
+    if (node.attributes?.action === 'go-back') {
+      navigate(-1)
+    }
   }
 
   function renderLabel() {
@@ -35,7 +39,12 @@ export function ButtonComponent({ node }: ButtonComponentProps) {
   }
 
   return (
-    <Button type={node.attributes?.type} onClick={handleClick}>
+    <Button
+      type={node.attributes?.type}
+      variant={node.attributes?.variant}
+      colorScheme={node.attributes?.colorScheme}
+      onClick={handleClick}
+    >
       {renderLabel()}
     </Button>
   )

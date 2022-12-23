@@ -5,7 +5,9 @@ import { Text } from '@siakit/text'
 
 import { ItemsType } from '../../../Routes'
 import { ButtonComponent } from './ButtonComponent'
+import { CardComponent } from './CardComponent'
 import { FlexComponent } from './FlexComponent'
+import { FooterComponent } from './FooterComponent'
 import { FormComponent } from './FormComponent'
 import { HeadingComponent } from './HeadingComponent'
 import { SearchComponent } from './SearchComponent'
@@ -28,6 +30,26 @@ export function RenderComponent({ nodeId, items }: RenderComponentProps) {
           <RenderComponent key={item} nodeId={item} items={items} />
         ))}
       </FlexComponent>
+    )
+  }
+
+  if (node.type === 'card') {
+    return (
+      <CardComponent node={node}>
+        {node.children?.map((item) => (
+          <RenderComponent key={item} nodeId={item} items={items} />
+        ))}
+      </CardComponent>
+    )
+  }
+
+  if (node.type === 'footer') {
+    return (
+      <FooterComponent node={node}>
+        {node.children?.map((item) => (
+          <RenderComponent key={item} nodeId={item} items={items} />
+        ))}
+      </FooterComponent>
     )
   }
 

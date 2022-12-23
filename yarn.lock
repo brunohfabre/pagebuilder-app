@@ -923,6 +923,15 @@
     "@siakit/heading" "*"
     "@siakit/layout" "*"
 
+"@siakit/card@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@siakit/card/-/card-0.0.6.tgz#206e3326e4fce34b697e93f2a5ad5cc4b89d12bc"
+  integrity sha512-16H66N8P8MIfi+2sDeDwYf5ueggzGIus1PiYYYZ8+bi6dUlppZ5frr3BmiLgHoZKf0Uiczo2HMCPK5wyt9DrQw==
+  dependencies:
+    "@siakit/core" "*"
+    "@siakit/heading" "*"
+    "@siakit/layout" "*"
+
 "@siakit/core@*", "@siakit/core@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@siakit/core/-/core-0.0.2.tgz#df2671a00f16b57fb1b4aa400bb6288be7abe126"
@@ -969,6 +978,13 @@
     eslint-plugin-react-hooks "^4.6.0"
     prettier "^2.7.1"
     standard "^17.0.0"
+
+"@siakit/footer@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@siakit/footer/-/footer-0.0.5.tgz#dae79bef540d0498cc7ccfad89e924b2f27d6120"
+  integrity sha512-X1A0cU5z7hxUyIavpdpELmEA9caXXQkEJxZpT8nRSXHlg4ErFdaPvjUlVtHCWFQb8vKqXGtL2eKTN6EfYQfd3w==
+  dependencies:
+    "@siakit/core" "*"
 
 "@siakit/form-components@*":
   version "0.0.9"

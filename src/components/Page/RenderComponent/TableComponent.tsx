@@ -2,10 +2,12 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@siakit/button'
+import { useDialog } from '@siakit/dialog'
 import { Form, FormHandles, TextInput } from '@siakit/form-unform'
 import { Flex } from '@siakit/layout'
+import { useLoading } from '@siakit/loading'
 import { Table } from '@siakit/table'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../../../lib/api'
 import { NodeType } from '../../../Routes'
@@ -23,17 +25,25 @@ export function TableComponent({ node }: TableComponentProps) {
   const navigate = useNavigate()
 
   const formRef = useRef<FormHandles>(null)
+  const { addDialog } = useDialog()
+  const { setLoading } = useLoading()
 
   const [search, setSearch] = useState('')
 
-  const { data, isLoading } = useQuery(
-    [
-      node.id,
-      {
-        search,
-      },
-    ],
+  const queryClient = useQueryClient()
+
+  const key = [
+    node.id,
+    {
+      search,
+    },
+  ]
+
+  const { data } = useQuery(
+    key,
     async () => {
+      setLoading(true)
+
       const response = await api.get(node.attributes.route, {
         params: {
           search,
@@ -41,6 +51,11 @@ export function TableComponent({ node }: TableComponentProps) {
       })
 
       return response.data
+    },
+    {
+      onSettled: () => {
+        setLoading(false)
+      },
     },
   )
 
@@ -51,6 +66,27 @@ export function TableComponent({ node }: TableComponentProps) {
   function handleActionClick(item: any, action: any) {
     if (action.action === 'navigate') {
       navigate(insertVariablesInString(action.route, item))
+    }
+
+    if (action.action === 'delete') {
+      const { title, description } = action
+
+      addDialog({
+        type: 'danger',
+        title,
+        description,
+        onAction: async () => {
+          await api({
+            method: 'delete',
+            url: insertVariablesInString(action.route, item),
+          })
+
+          queryClient.setQueryData(key, (prevState: any) =>
+            prevState.filter((data: any) => data.id !== item.id),
+          )
+        },
+        actionText: 'Yes, delete',
+      })
     }
   }
 
@@ -93,6 +129,7 @@ export function TableComponent({ node }: TableComponentProps) {
         headers={node.attributes?.headers ?? []}
         data={data ?? []}
         actions={node.attributes?.actions?.map((action: any) => ({
+          type: action.action === 'delete' ? 'danger' : 'default',
           label: action.label,
           onClick: (item: any) => handleActionClick(item, action),
         }))}
